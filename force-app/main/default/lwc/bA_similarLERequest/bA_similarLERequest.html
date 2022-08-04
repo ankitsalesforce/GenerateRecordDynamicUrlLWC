@@ -1,0 +1,250 @@
+<template>
+    <template if:true={loader}>
+        <lightning-spinner alternative-text="Loading..." size="small"></lightning-spinner>
+    </template>
+ 
+    <template if:true={similarLEFound}>
+    <div class="slds-box" style="background-color: white">
+        <lightning-card >
+            <div class="slds-float_left slds-m-left_large" style="font-size:20px;">
+                <b> Service Duration Days </b>
+            </div>
+ 
+        <br/>
+        <br/>
+        <!-- <div class="slds-m_around_medium" style="font-size:14px;">
+            Note: Below Submissions are showing from last 1 year
+        </div> -->
+        <br/>
+            <div class="table-container">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered table-show">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="rowbackgroud" style="white-space: normal;">
+                   		    <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Questionnaire </b></div>
+                        </th> 
+                        <th class="rowbackgroud" style="white-space: normal;">
+                   		    <div class="rowbackgroud" style="overflow-wrap:anywhere;"> <b> Opportunity Number  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                                <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Opportunity Name  </b></div>
+                        </th>
+                        <!-- <th class="rowbackgroud">
+                                <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Product/Service Scope  </b></div>
+                        </th> -->
+                        <th class="rowbackgroud" style="white-space: anywhere;">
+                            <div class="rowbackgroud" > <b> Tier2  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: anywhere;">
+                            <div class="rowbackgroud" > <b> Destination Country  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Created Date  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Total Duration of Service  </b></div>
+                        </th>
+                        <!-- <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Pref Baker Hughes Contracting Entity  </b></div>
+                        </th>
+                        <th class="rowbackgroud">
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Workflow Number </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" > <b> Status </b></div>
+                        </th>
+                        <th class="rowbackgroud" >
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Suggested Legal Entity </b></div>
+                        </th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <template if:true={getSimilarLEList}>
+                        <template for:each={getSimilarLEList} for:item="LE">
+                            <tr key={LE.Id}>
+                                <th scope="row" data-label="Name">
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;" >
+                                        <a onclick={handleQuesClick} href={quesrecordPageUrl} target="_blank" data-quesid={LE.Id}>{LE.Name}</a>
+                                    </div>
+                                </th>
+                                <th scope="row" data-label="Email">
+                                    <div class="slds-truncate" >{LE.BA_Opportunity_Number__c}</div>
+                                </th>
+                                <th scope="row" data-label="last Login Date">
+                                    <div class="slds-truncate">{LE.BA_Opportunity_Name__c}</div>
+                                </th>
+                                <!-- <th scope="row" data-label="IsActive">
+                                    <div class="slds-truncate" >{LE.BA_Product_Service_Scope__c}</div>
+                                </th>  -->
+                                <th scope="row" data-label="IsActive">
+                                    <div class="slds-truncate" >{LE.BA_Tier_2__c}</div>
+                                </th> 
+                                <th scope="row" data-label="IsActive">
+                                    <div class="slds-truncate" >{LE.BA_Destination_Country__c}</div>
+                                </th> 
+                                <th scope="row" data-label="IsActive">
+                                    <div class="slds-truncate" >
+                                        <lightning-formatted-date-time value={LE.CreatedDate}></lightning-formatted-date-time>   
+                                    </div>
+                                </th> 
+                                <th scope="row" data-label="IsActive">
+                                    <div class="slds-truncate" >{LE.BA_Total_duration_of_services__c}</div>
+                                </th> 
+                                <!-- <th scope="row" data-label="IsActive">
+                                    <div class="slds-truncate" >{LE.CreatedBy.Name}</div>
+                                </th>  -->
+                                <!-- <th scope="row" data-label="IsActive">
+                                    <div class="slds-truncate" >{LE.BA_Pref_Baker_Hughes_Contracting_Entity__c}</div>
+                                </th> 
+                         -->
+                                <!-- <template for:each={LE.Workflow_Details__r} for:item="work">
+                                    <th scope="row" data-label="IsActive" key={work.Id}>
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;">
+                                            <a onclick={handleWFClick} href={wfrecordPageUrl} target="_blank" data-workid={work.Id} >{work.Name}</a>
+                                        </div>
+                                    </th> 
+                                    <th scope="row" data-label="IsActive" key={work.Id}>
+                                        <div class="slds-truncate" >{work.BA_Status__c}</div>
+                                    </th> 
+                                    <th scope="row" data-label="IsActive" key={work.Id}>
+                                        <div class="slds-truncate" >{work.Suggested_Legal_Entity__c}</div>
+                                    </th> 
+
+                            
+                        </template> -->
+                     </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+            <!-- <table  class="slds-table slds-table_fixed-layout slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="rowbackgroud" style="white-space: normal;">
+                   		    <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Questionnaire </b></div>
+                        </th> 
+                        <th class="rowbackgroud" style="white-space: normal;">
+                   		    <div class="rowbackgroud" style="overflow-wrap:anywhere;"> <b> Opportunity Number  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                                <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Opportunity Name  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                                <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Product/     Service Scope  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: anywhere;">
+                            <div class="rowbackgroud" > <b> Tier2  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Created Date  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Created By  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Pref Baker Hughes Contracting Entity  </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Workflow Number </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" > <b> Status </b></div>
+                        </th>
+                        <th class="rowbackgroud" style="white-space: normal;">
+                            <div class="rowbackgroud" style="overflow-wrap:anywhere;" > <b> Suggested Legal Entity </b></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template if:true={getSimilarLEList}>
+                        <template for:each={getSimilarLEList} for:item="LE">
+                            <tr key={LE.Id}>
+                                <th scope="row" data-label="Name">
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;" >
+                                        <a onclick={handleQuesClick} href={quesrecordPageUrl} target="_blank" data-quesid={LE.Id} >{LE.Name}</a>
+                                    </div>
+                                </th>
+                                <th scope="row" data-label="Email">
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;" >{LE.BA_Opportunity_Number__c}</div>
+                                </th>
+                                <th scope="row" data-label="last Login Date">
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;">{LE.BA_Opportunity_Name__c}</div>
+                                </th>
+                                <th scope="row" data-label="IsActive">
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;" >{LE.BA_Product_Service_Scope__c}</div>
+                                </th> 
+                                <th scope="row" data-label="IsActive">
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;" >{LE.BA_Tier_2__c}</div>
+                                </th> 
+                                <th scope="row" data-label="IsActive">
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;">
+                                        <lightning-formatted-date-time value={LE.CreatedDate}></lightning-formatted-date-time>   
+                                    </div>
+                                </th> 
+                                <th scope="row" data-label="IsActive">
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;" >{LE.CreatedBy.Name}</div>
+                                </th> 
+                                <th scope="row" data-label="IsActive">
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;" >{LE.BA_Pref_Baker_Hughes_Contracting_Entity__c}</div>
+                                </th> 
+                        <template for:each={LE.Workflow_Details__r} for:item="work">
+                                <th scope="row" data-label="IsActive" key={work.Id}>
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;">
+                                        <a onclick={handleWFClick} href={wfrecordPageUrl} target="_blank" data-workid={work.Id} >{work.Name}</a>
+                                     
+                                    </div>
+                                </th> 
+                                 <th scope="row" data-label="IsActive" key={work.Id}>
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;" >{work.BA_Status__c}</div>
+                                </th> 
+                                <th scope="row" data-label="IsActive" key={work.Id}>
+                                    <div  class="rowbackgroud" style="overflow-wrap:anywhere;white-space: pre-wrap;" >{work.Suggested_Legal_Entity__c}</div>
+                                </th> 
+
+                        </template>
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table> -->
+            </div>
+            <br/>
+
+            <!-- <div class="slds-clearfix">
+                <div class="slds-page-header" role="banner">
+                    <div class="slds-float_right">            
+                        <lightning-button label="Prev"
+                                        disabled={isPrev} onclick={handlePrev}
+                                        variant="brand"
+                                        icon-name="utility:back"
+                                        name="prev">
+                         </lightning-button>
+
+                          <lightning-button label="Next"
+                                        disabled={isNext} onclick={handleNext}
+                                        variant="brand"
+                                        icon-name="utility:forward"
+                                        icon-position="right"
+                                        name="next">                    
+                            </lightning-button>
+                    </div>
+                    <span class="slds-badge slds-badge_lightest">
+                        {recordStart}-{recordEnd} of {totalRecords} | Page {pageNumber} of {totalPages}
+                    </span>
+                </div>
+            </div>  -->
+           
+        </lightning-card>
+    </div>
+</template>
+    
+<template if:false={similarLEFound}>
+            <lightning-card class="slds-m-around_medium">
+            <p style="size:20px;" class="slds-m-left_medium">Opps..!! Selected Legal Entity is not found in current year submissions</p>
+            </lightning-card>
+</template>
+    
+<!-- <template if:true={viewform}>
+    <c-b-a_quesviewform record-id="aHp3J000000ChQBSA0" object-api-name="BA_Questionnaire__c"></c-b-a_quesviewform>
+</template>     -->
+</template>

@@ -1,0 +1,97 @@
+<aura:component controller="BA_CustomLookUpReviwer" implements="force:appHostable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+	
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="truthy" type="boolean" default="true"/>
+    <aura:attribute name="userType" type="String" />
+    <aura:attribute name="LERequest" type="String" />
+    <aura:attribute name="missingLE" type="boolean" default="false"/>
+    <aura:attribute name="defaultView" type="boolean" default="true"/>
+    <aura:attribute name="LERequired" type="boolean" default="false"/>
+    <aura:attribute name="CheckBoxLabel" type="String" default="Please check this box if a new LE or Branch is required for this opportunity. Please notify the PC contacts about this requirement by clicking the Notify button in the workflow screen and selecting the appropriate PC contacts. The PC contacts will be included in the email notification once the workflow is closed."/>
+    <aura:attribute name="GoldId" type="String" />
+    <aura:attribute name="isSimilarLEFound" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+     <aura:html tag="style">
+            .cuf-content {
+            padding: 0 0rem !important;
+            }
+            .slds-p-around--medium {
+            padding: 1rem !important;
+            }
+          
+            .slds-modal__container{
+            max-width: 58% !important;
+            width:58% !important;
+            }
+	</aura:html>
+    
+    <aura:if isTrue="{!v.truthy}">
+        
+        <aura:if isTrue="{!v.defaultView}">
+            <div class="slds-modal__header">
+              <h1 id="modal-heading-01" class="slds-modal__title">Legal Entity</h1>
+            </div>
+            
+            <br/>
+                
+            <c:BA_CustomLookUpReviewerComp objectName="BA_Legal_Entity__c" fieldName="BA_LE_Name__r.Name" label="Legal Entity"  placeholder="Enter Value"/>
+            <!--<div class="slds-m-around_medium"> 
+            	
+            </div>-->
+            <aura:if isTrue="{!v.isSimilarLEFound}">
+                <div class="slds-grow slds-cell-wrap slds-m-around_medium" >
+                  Similar LE Found in old submissions,Please 
+                  <lightning:button variant="base" class="slds-text" label="click here"  title="Base action" aura:id="clickedHere" onclick="{!c.handleSimilarLE}"/> 
+                  to see details
+                </div>
+               
+            </aura:if>
+          	<div class="slds-grow slds-cell-wrap slds-m-around_medium" >
+            	 If the Legal Entity which you want to propose is not in the list,please 
+                 <lightning:button variant="base" class="slds-text" label="click here"  title="Base action" aura:id="clickedHere" onclick="{!c.handleClickHere}"/>  
+            </div>
+             <div class="slds-modal__footer">
+              	 <lightning:button variant="brand" label="Cancel"  onclick="{!c.handleCancel}" />
+                 <lightning:button variant="brand" label="Save"  onclick="{!c.handleSave}" />
+            </div>
+        </aura:if>
+        <aura:if isTrue="{!v.missingLE}">
+        	<lightning:layout >
+            
+            <lightning:layoutItem  flexibility="auto" padding="around-small" size="12">
+                 <div >
+                    Please provide the Legal Entity to the Submitter in the Tax comments and submit a request to add for future submissions. 
+                    Please include Legal Entity name and GOLD ID.
+                    Link to <a href="https://apps.ist.pwc.com/gold/" target="_blank"> click here </a>
+                </div>
+                
+                <br/>
+                
+                <div>
+                    <lightning:textarea name="LERequest" label="Request LE Details" value="{!v.LERequest}" placeholder="Please add LE Name and Gold ID here" />
+                   <div class="slds-m-around_medium">
+                		<lightning:input type="checkbox" label="{!v.CheckBoxLabel}" name="LE" checked="false" onclick="{!c.handleCheckbox}" />
+           			 </div>
+                </div>
+        </lightning:layoutItem>  
+                
+            
+                
+        </lightning:layout>
+            <div class="slds-modal__footer">
+              <lightning:button variant="brand" label="Cancel"  onclick="{!c.handleCancel}" />
+              <lightning:button variant="brand" label="Submit"  onclick="{!c.handleLERequest}" />
+            </div>
+        </aura:if>
+    	
+        
+       
+        <aura:set attribute="else">
+            Only Tax approver and Admin can update Legal Entity
+        </aura:set>
+        
+    </aura:if>
+    <aura:handler name="lookupComponentEvent" event="c:BA_MultiSelectLookupEvent" action="{!c.handleComponentEvent}"/> 
+    <aura:attribute name="selectedDataObj" type="String" access="private" description="Selected Records Object List" />
+</aura:component>

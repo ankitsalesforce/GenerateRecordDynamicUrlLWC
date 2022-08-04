@@ -1,0 +1,25 @@
+table{
+    border-collapse:collapse;
+    width: 100%;
+    border-spacing: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+td, th{
+    border:1px solid rgb(254, 251, 251);
+    text-align: left;
+    padding: 8px;
+}
+tr:nth-child(even){
+    background-color: #ddd;
+}
+.csvdownload{
+    float:left
+}
+.table-container{
+    overflow-x: auto;
+}
+.table-show{
+    empty-cells: show;
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>BA_CustomLookUpReviwer</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>BA_SelectLegalEntity</members>
+        <name>AuraDefinitionBundle</name>
+    </types>
+    <types>
+        <members>bA_ActiveReviewerSumaryLWC</members>
+        <members>bA_ReviewerUserLWC</members>
+        <name>LightningComponentBundle</name>
+    </types> 
+    
+    <version>54.0</version>
+</Package>

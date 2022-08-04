@@ -1,0 +1,58 @@
+<template>
+    <lightning-card title="Bid Advisor Reviewer Details">
+        <div class="slds-var-m-medium_around">
+            <lightning-layout>
+                    <lightning-layout-item  size="2"   padding="around-small">
+                        <lightning-combobox name="filterBy" value={filterBy} label="Filter By" 
+                                            options={FilterByValue} onchange={filterByHandler}>
+                        </lightning-combobox>
+                    </lightning-layout-item>
+                    <lightning-layout-item  size="4" padding="around-small">
+                        <lightning-input label="Filter" type="text" placeholder="Type here" onkeyup={filterHandler} ></lightning-input>
+                    </lightning-layout-item>
+               
+                <lightning-layout-item  size="2" alignment-bump="left" class="sort" padding="around-small">
+                    <lightning-combobox name="sortedBy" value={sortedBy} label="Sorted By" 
+                                        options={sortedByValue} onchange={sortHandler}>
+                    </lightning-combobox>
+                </lightning-layout-item>
+                <lightning-layout-item size="1"  class="csvdownload" flexibility="auto" padding="around-small">
+                    <lightning-icon icon-name="action:download"
+                                            class="slds-icon_large slds-m-top_x-medium"
+                                            alternative-text="CSV file" 
+                                            title="Download CSV file" 
+                                            label="Download CSV file" 
+                                            onclick={downloadCsv} 
+                                            size ="medium">
+                   </lightning-icon>
+                </lightning-layout-item>
+               
+            </lightning-layout>
+       
+        <table>
+            <thead>
+                <tr>
+                    <template for:each={headings} for:item="heading">
+                        <th key={heading}>{heading}</th>
+                    </template>
+                </tr>
+            </thead>
+            <tbody>
+                <template if:true={filteredData}>
+                    <template for:each={filteredData} for:item="data">
+                        <tr key={data.Id}>
+                            <td>{data.assigneeName}</td>
+                            <td>{data.assigneeEmail}</td>
+                            <td>{data.assigneeRole}</td>
+                           <td>{data.assigneeLastLogin}</td> 
+                            <td>{data.isActiveReviewer}</td>
+                        </tr>
+                    </template>
+                </template>
+                 
+
+            </tbody>
+        </table>
+    </div>
+    </lightning-card>
+</template>
